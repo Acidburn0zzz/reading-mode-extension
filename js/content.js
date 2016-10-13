@@ -3,9 +3,23 @@ function doMagic() {
 		OUTSIDE BODY
 
 		remove script, style, iframe,
-		button, form, input
+		button, form, input, video
 	*/
+	var elementList = [
+		"script",
+		"noscript",
+		"style",
+		"link",
+		"iframe",
+		"button",
+		"form",
+		"input",
+		"video"
+	];
 
+	elementList.forEach(function(element) {
+		$(element).remove();
+	});
 	/* 
 		INSIDE BODY
 
@@ -13,7 +27,18 @@ function doMagic() {
 		with at least 560 words
 		else remove tag
 	*/
-	alert('hello extensions');
+	
+	var contentList = [
+		"p"	// Potential for the list to increase
+	];
+
+	contentList.forEach(function(element) {
+		if($(element).val().replace(/ /g, '').length <= 200) {
+			$(element).remove();
+			$(element).parent().remove();
+		}
+	});
+
 }
 
 chrome.runtime.onMessage.addListener(
@@ -21,4 +46,5 @@ chrome.runtime.onMessage.addListener(
 		if(request.message === "toggle_button_clicked") {
 			doMagic();
 		}
-});
+	}
+);
